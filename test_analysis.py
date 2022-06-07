@@ -24,14 +24,14 @@ import numpy as np
 
 acc = raw_acc['total']
 acc = acc - np.mean(acc)
-times = (raw_acc['Timestamp (ns)'] - raw_acc['Timestamp (ns)'][0])/1000000
+times = (raw_acc['Timestamp (ns)'] - raw_acc['Timestamp (ns)'][0])/1000000000
 avg_timestep = np.mean(np.diff(times))
 fs = 1/(avg_timestep)
 
 
 # %%
-signal_psd = plt.psd(acc, 512, 1, label='Sum data')
-plt.plot()
+#signal_psd = plt.psd(acc, 512, 1, label='Sum data')
+#plt.plot()
 
 # %%
 freqs = np.fft.fftfreq(times.size, avg_timestep)
@@ -46,14 +46,17 @@ positive_ps = ps[:positive_lim]
 plt.figure()
 plt.plot(freqs[idx], ps[idx])
 plt.title('Power spectrum (np.fft.fft)')
-plt.xlim(0,0.03)
+plt.xlabel('Frequency (Hz)')
+plt.xlim(0,30)
 plt.show()
 
 # %%
 from scipy.signal import find_peaks
-peaks, _ = find_peaks(positive_ps, distance=150,threshold=np.mean(positive_ps))
+peaks, _ = find_peaks(positive_ps, distance=50, threshold = np.max(positive_ps)/2)
 plt.plot(positive_freqs,positive_ps)
 plt.plot(positive_freqs[peaks], positive_ps[peaks], "x")
+plt.xlabel('Frequency (Hz)')
+plt.xlim(0.0,30)
 plt.show()
 
 # %%
