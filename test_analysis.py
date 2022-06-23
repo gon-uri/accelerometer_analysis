@@ -2,7 +2,7 @@
 
 #%%
 from re import X
-from matplotlib.lines import _LineStyle
+#from matplotlib.lines import _LineStyle
 import pandas as pd
 amp_spectrum = pd.read_csv('data/Dsotp0600_AMP_SPECTRUM.csv')
 pow_spectrum = pd.read_csv('data/Dsotp0600_POW_SPECTRUM.csv')
@@ -74,8 +74,8 @@ gs = gridspec.GridSpec(2, 2, height_ratios=[2,2],hspace=0.5)
 #FUNDs_masked = np.ma.masked_where(signal_fund_freqs==0 , signal_fund_freqs)
 
 ax3 = plt.subplot(gs[2:])#, sharex=ax1)
-window = signal.gaussian(step_length,int(step_length/4))
-spectrogram, freqs, bins, im = plt.specgram(acc,window=window, NFFT=len(window), Fs=fs, noverlap=int(19*step_length / 20))
+window = signal.gaussian(step_length,int(step_length/6))
+spectrogram, freqs, bins, im = plt.specgram(acc,window=window, NFFT=len(window), Fs=fs, noverlap=int(2*step_length / 4))
 #plt.plot(times,FUNDs_masked,c='r')
 idx = np.argmax(spectrogram,axis=0)
 powers = np.max(spectrogram,axis=0)

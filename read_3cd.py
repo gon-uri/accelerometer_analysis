@@ -1,8 +1,17 @@
 #%%
 import c3d
 import numpy as np
-from scipy.signal import butter, lfilter
+from scipy.signal import butter, lfilter, filtfilt
 import matplotlib.pyplot as plt
+
+
+path_name_list = []
+path = '/Users/uribarri/Documents/app_data/files/'
+for filename in glob.glob(os.path.join(path, '*.csv')):
+    path_name_list.append(filename)
+
+path_name_list.sort()
+
 
 path = 'data_lab/DS_OT_P06_app04.c3d'
 reader = c3d.Reader(open(path, 'rb'))
@@ -23,6 +32,7 @@ fs = 300.0
 
 low_freq = 5
 high_freq = 30
+order=6
 
 analog_label_list = reader.analog_labels
 point_label_list = reader.point_labels
@@ -41,6 +51,7 @@ tel_s_x = vec_points[:,channel_number_L,0]
 tel_s_y = vec_points[:,channel_number_L,1]
 tel_s_z = vec_points[:,channel_number_L,2]
 
+times = (1/fs) * np.arange(len(tel_s_x))
 
 plt.plot(times,tel_s_x - np.mean(tel_s_x))
 plt.plot(times,tel_s_y - np.mean(tel_s_y))
@@ -49,20 +60,37 @@ plt.plot(times,tel_s_z - np.mean(tel_s_z))
 plt.xlabel('Time(s)')
 
 # %%
-times = (1/fs) * np.arange(len(tel_s_y))
+
+#vector_module = (tel_s_x**2+tel_s_y**2+tel_s_z**2)**(0.5)
+vector_module = tel_s_x
+vector_module = vector_module - np.mean(vector_module)
+
 freqs = np.fft.fftfreq(vector_module.size, 1/fs)
 positive_lim = int(len(freqs)/2)+1
 idx = np.argsort(freqs)
 ps = np.abs(np.fft.fft(vector_module-np.mean(vector_module)))**2
 
-vector_module = (tel_s_x**2+tel_s_y**2+tel_s_z**2)**(0.5)
-vector_module = tel_s_z
-vector_module = vector_module - np.mean(vector_module)
-
 plt.plot(times,vector_module)
+plt.xlabel('Time(s)')
+plt.show()
+
+plt.plot(times[0:300],vector_module[0:300])
 plt.xlabel('Time(s)')
 
 # %%
+
+def butter_highpass(cutoff, fs, order=4):
+    nyq = 0.5 * fs
+    normal_cutoff = cutoff / nyq
+    b, a = butter(order, normal_cutoff, btype='high', analog=False)
+    return b, a
+
+def butter_highpass_filter(data, cutoff, fs, order=4):
+    b, a = butter_highpass(cutoff, fs, order=order)
+    y = filtfilt(b, a, data)
+    return y
+
+
 def butter_bandpass(lowcut, highcut, fs, order=4):
     """
     Generates the coefficients for a butterworth bandpass filter
@@ -86,7 +114,8 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=4):
     y = lfilter(b, a, data)
     return y
 
-filtered_vector_module = butter_bandpass_filter(vector_module,low_freq,high_freq,fs)
+#filtered_vector_module = butter_bandpass_filter(vector_module,low_freq,high_freq,fs)
+filtered_vector_module = butter_highpass_filter(vector_module,low_freq,fs,order=order)
 
 plt.plot(times, filtered_vector_module)
 
@@ -103,9 +132,11 @@ plt.figure()
 plt.plot(filtered_freqs[idx], filtered_ps[idx])
 plt.title('Power spectrum (np.fft.fft)')
 plt.xlabel('Frequency (Hz)')
-plt.xlim(0,50)
+plt.xlim(0,20)
 #plt.ylim(0,30000)
 plt.show()
+
+
 # %%
 
 positive_freqs = freqs[:positive_lim]
