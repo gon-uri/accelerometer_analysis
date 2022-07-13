@@ -1,0 +1,64 @@
+<DigitalDevices>
+	<DeviceDefinition manufacturer="Vicon" type="Cometa Wave Digital Device" version="1.1.0.0" description="Streaming from the ditital output of the Myon Aktos.">
+		<Parameter name="Config" display-name="Configure" description="Click to configure the Myon channels" group="General" persistent="false" change-group-key="0">
+			<InitialValue type="Action" value="0"/>
+		</Parameter>
+		<Output name="EMG Channels" quantity="ElectricPotential">
+			<Component name="EMG1"/>
+			<Component name="EMG2"/>
+			<Component name="EMG3"/>
+			<Component name="EMG4"/>
+			<Component name="EMG5"/>
+			<Component name="EMG6"/>
+			<Component name="EMG7"/>
+			<Component name="EMG8"/>
+		</Output>
+		<Output name="IMU Accelerometers" quantity="Acceleration">
+			<Component name="IMU9_ACC_X"/>
+			<Component name="IMU9_ACC_Y"/>
+			<Component name="IMU9_ACC_Z"/>
+			<Component name="IMU10_ACC_X"/>
+			<Component name="IMU10_ACC_Y"/>
+			<Component name="IMU10_ACC_Z"/>
+			<Component name="IMU11_ACC_X"/>
+			<Component name="IMU11_ACC_Y"/>
+			<Component name="IMU11_ACC_Z"/>
+			<Component name="IMU12_ACC_X"/>
+			<Component name="IMU12_ACC_Y"/>
+			<Component name="IMU12_ACC_Z"/>
+			<Component name="IMU13_ACC_X"/>
+			<Component name="IMU13_ACC_Y"/>
+			<Component name="IMU13_ACC_Z"/>
+			<Component name="IMU14_ACC_X"/>
+			<Component name="IMU14_ACC_Y"/>
+			<Component name="IMU14_ACC_Z"/>
+			<Component name="IMU15_ACC_X"/>
+			<Component name="IMU15_ACC_Y"/>
+			<Component name="IMU15_ACC_Z"/>
+		</Output>
+		<Output name="IMU Gyroscopes" quantity="AngularVelocity">
+			<Component name="IMU9_GYR_X"/>
+			<Component name="IMU9_GYR_Y"/>
+			<Component name="IMU9_GYR_Z"/>
+			<Component name="IMU10_GYR_X"/>
+			<Component name="IMU10_GYR_Y"/>
+			<Component name="IMU10_GYR_Z"/>
+			<Component name="IMU11_GYR_X"/>
+			<Component name="IMU11_GYR_Y"/>
+			<Component name="IMU11_GYR_Z"/>
+			<Component name="IMU12_GYR_X"/>
+			<Component name="IMU12_GYR_Y"/>
+			<Component name="IMU12_GYR_Z"/>
+			<Component name="IMU13_GYR_X"/>
+			<Component name="IMU13_GYR_Y"/>
+			<Component name="IMU13_GYR_Z"/>
+			<Component name="IMU14_GYR_X"/>
+			<Component name="IMU14_GYR_Y"/>
+			<Component name="IMU14_GYR_Z"/>
+			<Component name="IMU15_GYR_X"/>
+			<Component name="IMU15_GYR_Y"/>
+			<Component name="IMU15_GYR_Z"/>
+		</Output>
+	</DeviceDefinition>
+</DigitalDevices>
+
