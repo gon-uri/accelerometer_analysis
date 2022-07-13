@@ -4,15 +4,6 @@ import numpy as np
 from scipy.signal import butter, lfilter, filtfilt
 import matplotlib.pyplot as plt
 
-
-path_name_list = []
-path = '/Users/uribarri/Documents/app_data/files/'
-for filename in glob.glob(os.path.join(path, '*.csv')):
-    path_name_list.append(filename)
-
-path_name_list.sort()
-
-
 path = 'data_lab/DS_OT_P06_app04.c3d'
 reader = c3d.Reader(open(path, 'rb'))
 
